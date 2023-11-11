@@ -27,13 +27,13 @@ class FileStorage:
         """Serialize __objects to the JSON file __file_path."""
         dic = FileStorage.__objects
         objdict = {obj: dic[obj].to_dict() for obj in dic.keys()}
-        with open(FileStorage.__file_path, "w") as f:
+        with open(FileStorage.__file_path, "w", encoding="UTF-8") as f:
             json.dump(objdict, f)
 
     def reload(self):
         """Deserialize the JSON file __file_path to __objects, if it exists."""
         try:
-            with open(FileStorage.__file_path, "r") as f:
+            with open(FileStorage.__file_path, "r", encoding="UTF-8") as f:
                 objdict = json.load(f)
                 for obj in objdict.values():
                     class_name = obj["__class__"]

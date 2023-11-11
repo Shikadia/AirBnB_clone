@@ -27,7 +27,6 @@ class BaseModel:
                     self.__dict__[x] = y
         else:
             models.storage.new(self)
-            print('yah')
     def __str__(self):
         """
         retunrs the str representation in a specific format
