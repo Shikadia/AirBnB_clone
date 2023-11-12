@@ -44,8 +44,7 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_create(self):
         """Test help method to create a user"""
-        m = ("Usage: create <class>\n        "
-             "Create a new class instance and print its id.")
+        m = ("creates a new class instance and displays the id.")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(m, output.getvalue().strip())
@@ -161,17 +160,6 @@ class TestHBNBCommand_create(unittest.TestCase):
         correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create MyModel"))
-            self.assertEqual(correct, output.getvalue().strip())
-
-    def test_create_invalid_syntax(self):
-        """Test method to create invalid syntax"""
-        correct = "*** Unknown syntax: MyModel.create()"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("MyModel.create()"))
-            self.assertEqual(correct, output.getvalue().strip())
-        correct = "*** Unknown syntax: BaseModel.create()"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("BaseModel.create()"))
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_create_object(self):

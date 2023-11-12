@@ -45,13 +45,13 @@ class TestState_instantiation(unittest.TestCase):
 
     def test_two_states_different_created_at(self):
         st1 = State()
-        sleep(0.05)
+        sleep(0.1)
         st2 = State()
         self.assertLess(st1.created_at, st2.created_at)
 
     def test_two_states_different_updated_at(self):
         st1 = State()
-        sleep(0.05)
+        sleep(0.1)
         st2 = State()
         self.assertLess(st1.updated_at, st2.updated_at)
 
@@ -106,19 +106,19 @@ class TestState_save(unittest.TestCase):
 
     def test_one_save(self):
         st = State()
-        sleep(0.05)
         first_updated_at = st.updated_at
+        sleep(0.1)
         st.save()
         self.assertLess(first_updated_at, st.updated_at)
 
     def test_two_saves(self):
         st = State()
-        sleep(0.05)
         first_updated_at = st.updated_at
+        sleep(0.05)
         st.save()
         second_updated_at = st.updated_at
         self.assertLess(first_updated_at, second_updated_at)
-        sleep(0.05)
+        sleep(0.1)
         st.save()
         self.assertLess(second_updated_at, st.updated_at)
 

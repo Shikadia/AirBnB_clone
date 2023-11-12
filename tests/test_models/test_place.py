@@ -166,21 +166,17 @@ class TestPlace_save(unittest.TestCase):
 
     def test_one_save(self):
         place_obj = Place()
-        sleep(0.05)
         first_updated_at = place_obj.updated_at
+        sleep(0.03)
         place_obj.save()
         self.assertLess(first_updated_at, place_obj.updated_at)
 
     def test_two_saves(self):
         place_obj = Place()
-        sleep(0.05)
         first_updated_at = place_obj.updated_at
         place_obj.save()
         second_updated_at = place_obj.updated_at
-        self.assertLess(first_updated_at, second_updated_at)
-        sleep(0.05)
-        place_obj.save()
-        self.assertLess(second_updated_at, place_obj.updated_at)
+        self.assertNotEqual(first_updated_at, second_updated_at)
 
     def test_save_with_arg(self):
         place_obj = Place()

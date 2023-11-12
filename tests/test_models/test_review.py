@@ -106,15 +106,15 @@ class TestReview_save(unittest.TestCase):
 
     def test_one_save(self):
         rv = Review()
-        sleep(0.05)
         first_updated_at = rv.updated_at
+        sleep(0.05)
         rv.save()
         self.assertLess(first_updated_at, rv.updated_at)
 
     def test_two_saves(self):
         rv = Review()
-        sleep(0.05)
         first_updated_at = rv.updated_at
+        sleep(0.05)
         rv.save()
         second_updated_at = rv.updated_at
         self.assertLess(first_updated_at, second_updated_at)

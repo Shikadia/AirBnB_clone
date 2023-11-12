@@ -104,15 +104,15 @@ class TestAmenity_save(unittest.TestCase):
 
     def test_one_save(self):
         am = Amenity()
-        sleep(0.03)
         first_updated_at = am.updated_at
+        sleep(0.05)
         am.save()
         self.assertLess(first_updated_at, am.updated_at)
 
     def test_two_saves(self):
         am = Amenity()
-        sleep(0.03)
         first_updated_at = am.updated_at
+        sleep(0.05)
         am.save()
         second_updated_at = am.updated_at
         self.assertLess(first_updated_at, second_updated_at)

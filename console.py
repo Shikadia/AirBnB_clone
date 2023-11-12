@@ -77,13 +77,13 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_quit(self, arg):
-        """Exits the program when called."""
+        """Quit command to exit the program."""
         print(":) It was lovely having you around :)")
         print("")
         return True
 
     def do_EOF(self, arg):
-        """Exits the program when reached."""
+        """EOF signal to exit the program."""
         print(":) That is an EOF for you ")
         print("")
         return True
@@ -164,7 +164,6 @@ class HBNBCommand(cmd.Cmd):
         attribute key/value pair."""
         arglist = splitargs(arg)
         objdict = storage.all()
-        print(arglist)
         if len(arglist) == 0:
             print("** class name missing **")
             return False
