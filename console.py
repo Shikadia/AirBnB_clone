@@ -5,6 +5,14 @@ import re
 from models.base_model import BaseModel
 from models import storage
 from shlex import split
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
+import time
+
 
 def splitargs(arg):
     """split the inputed argument into a list of arguments"""
@@ -25,6 +33,7 @@ def splitargs(arg):
         token_list.append(curly_braces.group())
         return token_list
 
+
 class HBNBCommand(cmd.Cmd):
     """
     command line interpreter
@@ -33,22 +42,56 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb): "
     __classes = {
-        "BaseModel"
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Review",
+        "Amenity"
     }
+
+    def default(self, arg):
+        """Parse and execute commands provided.
+        Maps recognized commands to corresponding methods within the class.
+        If the command is not recognized, returns False.
+        """
+        commands = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update,
+            "create": self.do_create
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            arglist = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", arglist[1])
+            if match is not None:
+                command = [arglist[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in commands.keys():
+                    call = "{} {}".format(arglist[0], command[1])
+                    return commands[command[0]](call)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     def do_quit(self, arg):
         """Exits the program when called."""
-        print(":( please don't go :(")
+        print(":) It was lovely having you around :)")
+        print("")
         return True
 
     def do_EOF(self, arg):
         """Exits the program when reached."""
-        print(":( why are you leaving")
+        print(":) That is an EOF for you ")
+        print("")
         return True
 
     def emptyline(self):
         """Execute nothing when an empty line is passed."""
         pass
+
     def do_create(self, arg):
         """
         creates a new class instance and displays the id.
@@ -114,6 +157,7 @@ class HBNBCommand(cmd.Cmd):
                 elif len(arglist) == 0:
                     objlist.append(obj.__str__())
             print(objlist)
+
     def do_update(self, arg):
         """Usage: update <class> <id> <attribute name> <attribute value>
         Update a class instance of a given id by adding or updating a given
@@ -159,6 +203,17 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[x] = y
         storage.save()
+
+    def do_count(self, arg):
+        """Usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class."""
+        arglist = splitargs(arg)
+        count = 0
+        for obj in storage.all().values():
+            if arglist[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
